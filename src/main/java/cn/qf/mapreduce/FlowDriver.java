@@ -18,30 +18,24 @@ import java.io.IOException;
  **/
 
 public class FlowDriver {
-    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
-        //
+    public static void main(String[] args)
+            throws IOException, ClassNotFoundException, InterruptedException {
         Configuration configuration = new Configuration();
-        //
         configuration.set("mapreduce.framework.name", "yarn");
         configuration.set("yarn.resourcemanager.hostname","linux9");
         //mr的应用程序
-
         Job job = Job.getInstance(configuration);
-        //
         job.setMapperClass(FlowMapper.class);
         job.setReducerClass(FlowReducer.class);
 
-        //job.setMapOutputKeyClass(Text.class);
-        //job.setMapOutputValueClass(Text.class);
-
+        job.setMapOutputKeyClass(Text.class);
+        job.setMapOutputValueClass(Text.class);
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(Text.class);
-        //
+        job.setOutputValueClass(FlowBean.class);
+
         FileInputFormat.setInputPaths(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
-        //
         job.setJarByClass(FlowDriver.class);
-        //
         job.waitForCompletion(true);
     }
 }

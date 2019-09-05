@@ -16,7 +16,8 @@ import java.io.IOException;
 
 public class FlowMapper extends Mapper<LongWritable, Text, Text, Text> {
     @Override
-    protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+    protected void map(LongWritable key, Text value, Context context)
+            throws IOException, InterruptedException {
         String line = value.toString();
         String[] fields = line.split("\t");
         String phone = fields[1];
