@@ -22,8 +22,8 @@ public class WordCountDriver {
         //
         Configuration configuration = new Configuration();
         //
-        configuration.set("mapreduce.framework.name", "yarn");
-        configuration.set("yarn.resourcemanager.hostname","linuxoffline");
+        //configuration.set("mapreduce.framework.name", "yarn");
+        //configuration.set("yarn.resourcemanager.hostname","linuxoffline");
         //
 
         Job job = Job.getInstance(configuration);
@@ -40,7 +40,8 @@ public class WordCountDriver {
         FileInputFormat.setInputPaths(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
         //
-        job.setJarByClass(WordCountDriver.class);
+        //job.setJarByClass(WordCountDriver.class);
+        job.setJar("/Users/taoxuefeng/Documents/02_StudyCoding/11_mavenStudy/hadoopStudy/target/hadoopStudy-1.0-SNAPSHOT.jar");
         //
         job.waitForCompletion(true);
     }

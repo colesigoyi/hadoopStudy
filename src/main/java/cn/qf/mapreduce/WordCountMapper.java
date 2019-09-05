@@ -1,5 +1,6 @@
 package cn.qf.mapreduce;
 
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -19,7 +20,7 @@ import java.io.IOException;
  * KEYOUT:输出的key的类型
  * VALUEOUT:输出的value的类型
  */
-public class WordCountMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
+public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
     /**
      * 每读取一行文本，这个map方法就被调用一次
      * @param key：对应的输入的key，在此处表示的就是行的编号
@@ -35,7 +36,7 @@ public class WordCountMapper extends Mapper<LongWritable, Text, Text, LongWritab
         //3、遍历
         for (String word : words) {
             //4、将单词作为key，出现就记录一次
-            context.write(new Text(word), new LongWritable(1));
+            context.write(new Text(word), new IntWritable(1));
         }
     }
 }
