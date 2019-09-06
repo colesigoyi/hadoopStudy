@@ -21,8 +21,11 @@ public class FlowDriver {
     public static void main(String[] args)
             throws IOException, ClassNotFoundException, InterruptedException {
         Configuration configuration = new Configuration();
-        //configuration.set("mapreduce.framework.name", "yarn");
-        //configuration.set("yarn.resourcemanager.hostname","linux9");
+        configuration.set("mapreduce.framework.name", "yarn");
+        configuration.set("yarn.resourcemanager.hostname","linux9");
+        configuration.set("mapreduce.app-submission.cross-platform", "true");
+        configuration.set("fs.defaultFS", "hdfs://linux9:9000");
+
         //mr的应用程序
         Job job = Job.getInstance(configuration);
         job.setMapperClass(FlowMapper.class);
@@ -35,8 +38,8 @@ public class FlowDriver {
 
         FileInputFormat.setInputPaths(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
-        //job.setJarByClass(FlowDriver.class);
-        job.setJar("/Users/taoxuefeng/Documents/02_StudyCoding/11_mavenStudy/hadoopStudy/target/hadoopStudy-1.0-SNAPSHOT.jar");
+        job.setJarByClass(FlowDriver.class);
+        //job.setJar("/Users/taoxuefeng/Documents/02_StudyCoding/11_mavenStudy/hadoopStudy/target/hadoopStudy-1.0-SNAPSHOT.jar");
         job.waitForCompletion(true);
     }
 }
