@@ -28,6 +28,7 @@
             <version>3.4.5</version>
             <type>pom</type>
         </dependency>
+
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -47,7 +48,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
 
     </dependencies>
 </project>

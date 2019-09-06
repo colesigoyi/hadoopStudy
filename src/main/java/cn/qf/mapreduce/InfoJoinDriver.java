@@ -16,7 +16,6 @@ import org.apache.hadoop.util.ToolRunner;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 
 
@@ -95,7 +94,6 @@ class InfoJoinReducer extends Reducer< Text, InfoJoinBean, InfoJoinBean, NullWri
                 pbean.setOid(bean.getOid());
                 pbean.setDate(bean.getDate());
                 pbean.setAmount(bean.getAmount());
-
             }else {
                 InfoJoinBean obean = new InfoJoinBean();
                 obean.setPid(bean.getPid());
@@ -107,6 +105,7 @@ class InfoJoinReducer extends Reducer< Text, InfoJoinBean, InfoJoinBean, NullWri
                 obean.setDate(bean.getDate());
                 obean.setAmount(bean.getAmount());
                 obeans.add(obean);
+                obeans.add(bean);
             }
         }
         for (InfoJoinBean bean : obeans) {
