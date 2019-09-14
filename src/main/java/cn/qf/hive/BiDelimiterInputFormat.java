@@ -68,14 +68,7 @@ public class BiDelimiterInputFormat extends TextInputFormat {
 			}
 			return next;
 
-			/*while (reader.next(key, text)) {
-				String strReplace = text.toString().toLowerCase().replaceAll("\\|\\|", "|");
-				Text txtReplace = new Text();
-				txtReplace.set(strReplace);
-				value.set(txtReplace.getBytes(), 0, txtReplace.getLength());
-				return true;
-			}
-			return false;*/
+
 		}
 	}
 }
