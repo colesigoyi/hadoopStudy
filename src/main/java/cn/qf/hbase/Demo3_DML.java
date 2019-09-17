@@ -1,7 +1,6 @@
 package cn.qf.hbase;
 
 import org.apache.hadoop.hbase.client.*;
-import org.apache.hadoop.yarn.api.protocolrecords.IncreaseContainersResourceRequest;
 import org.junit.Test;
 
 import java.io.IOException;

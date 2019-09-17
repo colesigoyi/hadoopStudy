@@ -6,6 +6,7 @@ import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.filter.Filter;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -95,18 +96,21 @@ public class HBaseUtils {
         }
     }
     public static void showResult(Result result) {
+        boolean flag = true;
+        //Cell c = null;
         while (result.advance()) {
             Cell cell = result.current();
-            //System.out.println(new String(cell.getFamilyArray(),
-            //        cell.getFamilyOffset(),cell.getFamilyLength()));
-            //System.out.println(new String(cell.getQualifierArray(),
-            //        cell.getQualifierOffset(),cell.getQualifierLength()));
-            //System.out.println(new String(cell.getRowArray(),
-            //        cell.getRowOffset(),cell.getRowLength()));
-            System.out.println(new String(CellUtil.cloneFamily(cell)));
-            System.out.println(new String(CellUtil.cloneQualifier(cell)));
-            System.out.println(new String(CellUtil.cloneRow(cell)));
-            System.out.println(new String(CellUtil.cloneValue(cell)));
+            if (flag) {
+                System.out.println(new String(CellUtil.cloneRow(cell)));
+                flag = false;
+            }
+            //if (c == null) {
+            //    c = cell;
+            //    System.out.println(new String(CellUtil.cloneRow(cell)));
+            //}
+            System.out.println(new String(CellUtil.cloneFamily(cell)) +
+                    ":" + new String(CellUtil.cloneQualifier(cell)) +
+                    "  " + new String(CellUtil.cloneValue(cell)));
         }
     }
     public static void show(ResultScanner scanner) {
@@ -115,6 +119,25 @@ public class HBaseUtils {
         while (iterator.hasNext()) {
             Result next = iterator.next();
             HBaseUtils.showResult(next);
+        }
+    }
+    public static void show(Filter filter) {
+        //获取scan对象
+        Scan scan = new Scan();
+        scan.setFilter(filter);
+        //获取到扫描器
+        Table table = HBaseUtils.getTable("ns1:t_user");
+        try {
+            ResultScanner scanner = null;
+            if (table != null) {
+                scanner = table.getScanner(scan);
+            }
+            if (scanner != null) {
+                HBaseUtils.show(scanner);
+            }
+            HBaseUtils.close(table);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
