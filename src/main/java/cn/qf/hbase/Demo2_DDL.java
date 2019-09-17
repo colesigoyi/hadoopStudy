@@ -105,9 +105,7 @@ public class Demo2_DDL {
                 //删除表
                 admin.deleteTable(tableName);
             }
-
         }
-
     }
 }
 
