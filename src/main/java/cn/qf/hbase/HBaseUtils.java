@@ -1,15 +1,14 @@
 package cn.qf.hbase;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.Cell;
+import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
-import org.apache.hadoop.hbase.client.Admin;
-import org.apache.hadoop.hbase.client.Connection;
-import org.apache.hadoop.hbase.client.ConnectionFactory;
-import org.apache.hadoop.hbase.client.Table;
-import sun.tools.jconsole.Tab;
+import org.apache.hadoop.hbase.client.*;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 /**
  * @ program: hadoopStudy
@@ -77,6 +76,7 @@ public class HBaseUtils {
 
     public static void close(Admin admin) {
         if (admin != null) {
+            //admin.close();
             Connection connection = admin.getConnection();
             try {
                 connection.close();
@@ -92,6 +92,29 @@ public class HBaseUtils {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    public static void showResult(Result result) {
+        while (result.advance()) {
+            Cell cell = result.current();
+            //System.out.println(new String(cell.getFamilyArray(),
+            //        cell.getFamilyOffset(),cell.getFamilyLength()));
+            //System.out.println(new String(cell.getQualifierArray(),
+            //        cell.getQualifierOffset(),cell.getQualifierLength()));
+            //System.out.println(new String(cell.getRowArray(),
+            //        cell.getRowOffset(),cell.getRowLength()));
+            System.out.println(new String(CellUtil.cloneFamily(cell)));
+            System.out.println(new String(CellUtil.cloneQualifier(cell)));
+            System.out.println(new String(CellUtil.cloneRow(cell)));
+            System.out.println(new String(CellUtil.cloneValue(cell)));
+        }
+    }
+    public static void show(ResultScanner scanner) {
+        //遍历
+        Iterator<Result> iterator = scanner.iterator();
+        while (iterator.hasNext()) {
+            Result next = iterator.next();
+            HBaseUtils.showResult(next);
         }
     }
 }
