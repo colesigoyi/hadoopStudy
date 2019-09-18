@@ -57,7 +57,7 @@ public class Demo3_DML {
     @Test
     public void scan() {
         //获取table对象
-        Table table = HBaseUtils.getTable();
+        Table table = HBaseUtils.getTable("ns1:t_user");
         //获取scan对象
         Scan scan = new Scan();
         try {
