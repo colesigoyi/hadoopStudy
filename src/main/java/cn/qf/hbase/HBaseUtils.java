@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 public class HBaseUtils {
     private static final  String ZK_NAME="hbase.zookeeper.quorum";
-    private static final  String ZK_URL="10.211.55.28:2181,10.211.55.29:2181,10.211.55.30:2181";
+    private static final  String ZK_URL="10.211.55.42:2181";
 
     private static Configuration configuration;
     private static Connection connection;
